@@ -14,18 +14,6 @@ Delete tasks
 
 Persistent storage using Spring Data JPA
 
-🏗️ Project Structure
-src/main/java/com/example/todo
-│
-├── TodoListWebAppApplication.java   # Main entry point (Spring Boot application)
-├── controller/
-│   └── TodoController.java          # Handles web requests (REST/MVC endpoints)
-├── service/
-│   └── TodoService.java             # Business logic for managing todos
-├── repository/
-│   └── TodoRepository.java          # Interface for DB operations (extends JpaRepository)
-└── model/
-    └── Todo.java                    # Entity class (represents Todo task)
 
 ⚙️ Tech Stack
 
@@ -37,7 +25,7 @@ Spring Data JPA
 
 H2 / MySQL (configurable database)
 
-Thymeleaf / REST API (depending on frontend choice)
+Thymeleaf
 
 🚀 Getting Started
 Prerequisites
