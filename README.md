@@ -6,7 +6,7 @@
 ![Database](https://img.shields.io/badge/Database-H2%2FMySQL-lightgrey?logo=mysql)
 
 A simple **CRUD-based Todo Web Application** built with **Spring Boot** 🚀.
-This project demonstrates **REST API design**, **Spring Data JPA**, and **MVC architecture**.
+This project demonstrates **H2 Embedded DataBase**, **Spring Data JPA**, and **MVC architecture**.
 
 ---
 
