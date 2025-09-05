@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Todo - Todo List Manager</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-edit"></i> Edit Task</h1>
+            <a th:href="@{/todos}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </header>
+
+        <div class="edit-section">
+            <div class="card">
+                <form th:action="@{/todos/{id}(id=${todo.id})}" method="post" th:object="${todo}" class="todo-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="title">Task Title *</label>
+                            <input type="text" th:field="*{title}" id="title" required class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Priority</label>
+                            <select th:field="*{priority}" id="priority" class="select-field">
+                                <option value="LOW">Low Priority</option>
+                                <option value="MEDIUM">Medium Priority</option>
+                                <option value="HIGH">High Priority</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea th:field="*{description}" id="description" class="textarea-field" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" th:field="*{completed}" class="checkbox-field">
+                            <span class="checkmark"></span>
+                            Mark as completed
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Update Task
+                        </button>
+                        <a th:href="@{/todos}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Task Preview -->
+        <div class="preview-section">
+            <h3>Preview</h3>
+            <div class="todo-card" th:classappend="${todo.completed} ? 'completed' : ''">
+                <div class="todo-header">
+                    <div class="todo-priority" th:classappend="${#strings.toLowerCase(todo.priority)}">
+                        <span th:text="${todo.priority}">MEDIUM</span>
+                    </div>
+                </div>
+                
+                <div class="todo-content">
+                    <h3 class="todo-title" th:text="${todo.title}">Task Title</h3>
+                    <p class="todo-description" th:if="${!#strings.isEmpty(todo.description)}" th:text="${todo.description}">
+                        Task Description
+                    </p>
+                </div>
+                
+                <div class="todo-footer">
+                    <span class="todo-status" th:text="${todo.completed} ? 'Completed' : 'Pending'">Pending</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Live preview update
+        document.querySelectorAll('input, textarea, select').forEach(element => {
+            element.addEventListener('input', updatePreview);
+        });
+
+        function updatePreview() {
+            const title = document.getElementById('title').value || 'Task Title';
+            const description = document.querySelector('textarea').value;
+            const priority = document.getElementById('priority').value;
+            const completed = document.querySelector('input[type="checkbox"]').checked;
+
+            // Update preview
+            document.querySelector('.preview-section .todo-title').textContent = title;
+            
+            const descElement = document.querySelector('.preview-section .todo-description');
+            if (description) {
+                descElement.textContent = description;
+                descElement.style.display = 'block';
+            } else {
+                descElement.style.display = 'none';
+            }
+
+            const priorityElement = document.querySelector('.preview-section .todo-priority');
+            priorityElement.className = `todo-priority ${priority.toLowerCase()}`;
+            priorityElement.querySelector('span').textContent = priority;
+
+            const statusElement = document.querySelector('.preview-section .todo-status');
+            statusElement.textContent = completed ? 'Completed' : 'Pending';
+
+            const cardElement = document.querySelector('.preview-section .todo-card');
+            if (completed) {
+                cardElement.classList.add('completed');
+            } else {
+                cardElement.classList.remove('completed');
+            }
+        }
+    </script>
+</body>
+</html>
