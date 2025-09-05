@@ -60,7 +60,7 @@ src/main/java/com/example/todo
 ```bash
 # Clone repository
 git clone https://github.com/harshaddhonde4/Todo-List-Web-App-Spring-Boot-.git
-cd todo-webapp
+cd Todo-List-Web-App-Spring-Boot-
 
 # Run the app
 mvn spring-boot:run
